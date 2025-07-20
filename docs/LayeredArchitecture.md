@@ -72,3 +72,49 @@ flowchart TD
   controller --> service["ビジネスロジック層<br>BookService"]
   service --> repository["データアクセス層<br>PrismaBookRepository"]
 ```
+この構成は、処理の責務をプレゼンテーション層・ビジネスロジック層・データアクセス層に分けて整理することで、役割の明確化や見通しの良いコード構成を実現しています。
+特に、小規模な開発やスピード重視のプロジェクトでは、このような構成がシンプルで扱いやすいというメリットがあります。
+
+しかし、この設計には上位層が下位層の具体的な実装に強く依存してしまっているという課題があります。
+このような密結合な構成では、以下のような問題が発生します
+- 単体テストが困難になる
+- 実装の差し替えが難しくなる
+- 保守性・拡張性が低下する
+
+これらの問題の原因は、各層のモジュールが密接に結びついた「密結合」な状態にあることです。
+
+### 解決策：依存性逆転の原則（DIP）の適用
+この問題を解消するために、依存性逆転の原則（DIP: Dependency Inversion Principle）を適用し、依存の方向性を見直した設計に変更します。
+
+以下が改善後の構成です。
+```mermaid
+flowchart TD
+  %% プレゼンテーション層
+  controller["BookController"]
+
+  %% ビジネスロジック層
+  serviceInterface["BookServiceInterface"]
+  service["BookService"]
+
+  %% データアクセス層
+  repositoryInterface["BookRepositoryInterface"]
+  repository["PrismaBookRepository"]
+
+  %% ControllerはServiceInterfaceに依存
+  controller --> serviceInterface
+
+  %% ServiceはRepositoryInterfaceに依存
+  serviceInterface --> service
+  service --> repositoryInterface
+
+  %% RepositoryはInterfaceの実装
+  repositoryInterface --> repository
+```
+この構成では、各層はインターフェースを介して他の層と連携することで、柔軟性とテスト容易性を向上させています。
+### 改善点のまとめ
+- 各層（プレゼンテーション層、ビジネスロジック層、データアクセス層）はそのまま維持
+- インターフェース（Interface）を導入することで、具体実装からの依存を排除
+- 上位層は下位層の実装ではなくインターフェースに依存
+- 下位層はそのインターフェースを実装する形で責務を果たす
+
+このように設計を見直すことで、各層の結合度を大幅に下げ、柔軟でテストしやすい構成が実現できます。
