@@ -1,0 +1,55 @@
+{
+  "editor.minimap.enabled": false, // ミニマップを非表示にする
+  "editor.renderControlCharacters": true, // 制御文字を表示する
+  "editor.suggestSelection": "first", // サジェスト一覧の初期表示項目設定
+  "breadcrumbs.enabled": true, // ファイルのパンくずリストを表示する
+  "files.insertFinalNewline": true, // ファイルの末尾を改行で終わらせる
+  "editor.fontFamily": "'Fira Code', Hasklig, Consolas, 'Courier New', monospace",
+  "editor.fontLigatures": true, // 合字を有効化
+  "editor.fontSize": 14, // フォントサイズを変更
+  "editor.renderLineHighlight": "all", // 選択行の行番号をハイライトする
+  "editor.cursorBlinking": "smooth", // カーソルが滑らかに点滅するように
+  "editor.cursorSmoothCaretAnimation": "on", // カーソルの点滅をアニメーション表示する
+  "editor.cursorStyle": "block", // カーソルの外観をブロックに変更
+  "files.autoGuessEncoding": true, // ファイルの自動エンコードを実施
+  "window.zoomLevel": 0, // 画面全体の表示サイズはデフォルト
+  "editor.bracketPairColorization.enabled": true, // 括弧の対応を色付ける
+  "editor.mouseWheelZoom": true, // cmd + マウスホイールで拡大縮小できるようにする(WindowsではCtrl)
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "[sql]": {
+    "editor.tabSize": 2
+  },
+  "[shellscript]": {
+    "editor.tabSize": 2
+  },
+  "[typescript]": {
+    "editor.tabSize": 2
+  },
+  "[javascript]": {
+    "editor.tabSize": 2
+  },
+  "[javascriptreact]": {
+    "editor.tabSize": 2
+  },
+    "workbench.colorCustomizations": {
+    // タブ関連
+    "tab.activeBackground": "#4b4b53",         // アクティブなタブの背景
+    "tab.hoverForeground": "#ffffff",         // タブホバー時の文字色
+    "tab.hoverBackground": "#2f3233",         // タブホバー時の背景
+    // タイトルバー
+    "titleBar.activeBackground": "#1f44a0",    // アクティブなタイトルバーの背景
+    "titleBar.activeForeground": "#b4b9cd",    // アクティブなタイトルバーの文字色
+    "titleBar.inactiveBackground": "#183170",  // 非アクティブなタイトルバーの背景
+    "titleBar.inactiveForeground": "#868fa7",  // 非アクティブなタイトルバーの文字色
+    // アクティビティバー（左のアイコン）
+    "activityBar.background": "#091638",
+    "activityBar.foreground": "#dbdce0",
+    "activityBar.inactiveForeground": "#6a7699",
+    // ステータスバー（最下部）
+    "statusBar.background": "#26244d",
+    "statusBar.foreground": "#848484",
+    // エディタ内ハイライト
+    "editor.lineHighlightBackground": "#292929" // カーソル行の背景
+  }
+}
