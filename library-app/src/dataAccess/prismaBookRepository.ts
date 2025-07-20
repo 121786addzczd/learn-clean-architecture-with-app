@@ -1,9 +1,10 @@
 import { PrismaClient, Book } from "@prisma/client";
+import { BookRepositoryInterface } from "./bookRepositoryInterface";
 
 /**
  * Prisma を使って書籍データを管理するリポジトリクラス
  */
-export class PrismaBookRepository {
+export class PrismaBookRepository  implements BookRepositoryInterface {
   private prisma: PrismaClient;
   
   constructor() {

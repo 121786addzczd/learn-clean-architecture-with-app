@@ -1,9 +1,13 @@
 import { Router } from 'express';
 import { BookController } from '../presentation/bookController';
+import { PrismaBookRepository } from '../dataAccess/prismaBookRepository';
+import { BookService } from '../businessLogic/bookService';
 
 const router = Router();
 
-const bookController = new BookController();
+const bookRepository = new PrismaBookRepository();
+const bookService = new BookService(bookRepository);
+const bookController = new BookController(bookService);
 
 // ヘルスチェック
 router.get('/health_check', (req, res) => {

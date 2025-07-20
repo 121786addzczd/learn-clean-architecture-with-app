@@ -1,12 +1,9 @@
 import { Book } from '@prisma/client';
-import { PrismaBookRepository } from '../dataAccess/prismaBookRepository';
+import { BookRepositoryInterface } from '../dataAccess/bookRepositoryInterface';
+import { BookServiceInterface } from './bookServiceInterface';
 
-export class BookService {
-  private bookRepository: PrismaBookRepository;
-  
-  constructor() {
-    this.bookRepository = new PrismaBookRepository();
-  }
+export class BookService implements BookServiceInterface {
+  constructor(private readonly bookRepository: BookRepositoryInterface) {}
 
   /**
    * 書籍を新規登録する。
