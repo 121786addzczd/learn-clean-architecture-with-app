@@ -30,4 +30,6 @@ export function writeFile(filePath: string, content: string): void {
     fs.mkdirSync(dir, { recursive: true });
   }
   fs.writeFileSync(filePath, content, 'utf8');
+
+  console.log(`Created: ${filePath}`);
 }
