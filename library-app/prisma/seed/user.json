@@ -1,0 +1,20 @@
+[
+  {
+    "id": "sampleUser1",
+    "email": "test1@example.com",
+    "createdAt": "2025-07-21T13:57:10.773Z",
+    "updatedAt": "2025-07-21T13:57:10.773Z"
+  },
+  {
+    "id": "sampleUser2",
+    "email": "test2@example.com",
+    "createdAt": "2025-07-21T13:57:10.773Z",
+    "updatedAt": "2025-07-21T13:57:10.773Z"
+  },
+  {
+    "id": "sampleUser3",
+    "email": "test3@example.com",
+    "createdAt": "2025-07-21T13:57:10.773Z",
+    "updatedAt": "2025-07-21T13:57:10.773Z"
+  }
+]

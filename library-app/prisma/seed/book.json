@@ -1,0 +1,23 @@
+[
+  {
+    "id": "sampleUuid1",
+    "title": "サンプル書籍1",
+    "isAvailable": false,
+    "createdAt": "2025-07-21T13:57:10.771Z",
+    "updatedAt": "2025-07-21T14:04:50.506Z"
+  },
+  {
+    "id": "sampleUuid2",
+    "title": "サンプル書籍2",
+    "isAvailable": true,
+    "createdAt": "2025-07-21T13:57:10.771Z",
+    "updatedAt": "2025-07-21T13:57:10.771Z"
+  },
+  {
+    "id": "sampleUuid3",
+    "title": "サンプル書籍3",
+    "isAvailable": true,
+    "createdAt": "2025-07-21T13:57:10.771Z",
+    "updatedAt": "2025-07-21T13:57:10.771Z"
+  }
+]
