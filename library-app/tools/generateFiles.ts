@@ -4,6 +4,7 @@ import { capitalize, lowerCaseFirst, writeFile } from './utils';
 import { generateEntity, generateRepositoryInterface } from './templates/entityLayer';
 import { generateUseCase, generateUseCaseInterface, generateRequestDto, generateResponseDto } from './templates/useCaseLayer';
 import { generateController, generatePrismaRepository } from './templates/adapterLayer';
+import { generateRouter } from './templates/infrastructureLayer';
 
 async function generateEntityLayer() {
   const { entityName } = await inquirer.prompt([
@@ -129,6 +130,20 @@ async function generateInterfaceAdapterLayer() {
   );
 }
 
+async function generateInfrastructureLayer() {
+  const { entityName } = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'entityName',
+      message: 'エンティティの名前を入力してください:',
+    }
+  ]);
+
+  const basePath = path.join(__dirname, '..', 'src', 'infrastructure');
+  const routerContent = generateRouter(entityName);
+  writeFile(path.join(basePath, 'web', 'routers', `${lowerCaseFirst(entityName)}Router.ts`), routerContent);
+}
+
 async function main() {
   const layers = [
     'Entity',
@@ -155,7 +170,7 @@ async function main() {
   } else if (layer === 'Interface adapter') {
     await generateInterfaceAdapterLayer();
   } else if (layer === 'Frameworks & driver') {
-    console.log('Frameworks & driver');
+    await generateInfrastructureLayer();
   } else {
     console.error('不正な選択です。');
   }
