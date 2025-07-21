@@ -38,9 +38,21 @@ export class PrismaBookRepository  implements BookRepositoryInterface {
    * @param id - 書籍のUUID
    * @returns 見つかった書籍データ、またはnull
    */
-  // async findById(id: string): Promise<Book | null> {
-  //   return await this.prisma.book.findUnique({
-  //     where: { id },
-  //   });
-  // }
+  async findById(id: string): Promise<Book | null> {
+    const foundBook = await this.prisma.book.findUnique({
+      where: { id },
+    });
+
+    if (!foundBook) {
+      return null;
+    }
+
+    return new Book(
+      foundBook.id,
+      foundBook.title,
+      foundBook.isAvailable,
+      foundBook.createdAt,
+      foundBook.updatedAt
+    );
+  }
 }

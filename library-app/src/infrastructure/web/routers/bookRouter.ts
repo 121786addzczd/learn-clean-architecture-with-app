@@ -4,6 +4,7 @@ import { PrismaBookRepository } from '../../../adapter/repositories/prismaBookRe
 import { PrismaClient } from '@prisma/client';
 import { UuidGenerator } from '../../../adapter/utils/uuidGenerator';
 import { AddBookUseCase } from '../../../application/useCases/book/addBookUseCase';
+import { FindBookByIdUseCase } from '../../../application/useCases/book/findBookByIdUseCase';
 
 const router = Router();
 
@@ -12,10 +13,11 @@ const prisma = new PrismaClient();
 const uuidGenerator = new UuidGenerator();
 const bookRepository = new PrismaBookRepository(prisma);
 const addBookUseCase = new AddBookUseCase(bookRepository, uuidGenerator);
-const bookController = new BookController(addBookUseCase);
+const findBookByIdUseCase = new FindBookByIdUseCase(bookRepository);
+const bookController = new BookController(addBookUseCase, findBookByIdUseCase);
 
 // ルーティング定義
 router.post('/', bookController.create.bind(bookController));
-// router.get('/books/:id', bookController.findById.bind(bookController));
+router.get('/:id', bookController.findById.bind(bookController));
 
 export default router;
