@@ -27,7 +27,7 @@ export class Book {
     return this._updatedAt;
   }
 
-  loan() {
+  rental() {
     if (!this._isAvailable) {
       throw new Error('この書籍は貸出中です');
     }
