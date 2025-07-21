@@ -7,7 +7,7 @@ library-appディレクトリに移動した状態で、以下の手順に従っ
 同じ階層にある.env.exampleファイルをコピーして.envを作成します。
 
     ```bash
-    cp .env.exampl .env
+    cp .env.example .env
     ```
 
 2. パッケージのインストール

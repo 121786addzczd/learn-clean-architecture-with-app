@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { Book } from '../../domain/entities/book';
 import { BookRepositoryInterface } from '../../domain/repositories/bookRepositoryInterface';
+import { TransactionContextInterface } from '../../domain/utils/transactionContextInterface';
 
 /**
  * Prisma を使って書籍データを管理するリポジトリクラス
@@ -13,8 +14,9 @@ export class PrismaBookRepository  implements BookRepositoryInterface {
    * @param title - 登録する書籍のタイトル
    * @returns 登録された書籍データ
    */
-  async create(book: Book): Promise<Book> {
-    const createdBook = await this.prisma.book.create({
+  async create(book: Book, ctx?: TransactionContextInterface): Promise<Book> {
+    const prisma = ctx ? (ctx as PrismaClient) : this.prisma;
+    const createdBook = await prisma.book.create({
       data: {
         id: book.id,
         title: book.title,
@@ -38,8 +40,9 @@ export class PrismaBookRepository  implements BookRepositoryInterface {
    * @param id - 書籍のUUID
    * @returns 見つかった書籍データ、またはnull
    */
-  async findById(id: string): Promise<Book | null> {
-    const foundBook = await this.prisma.book.findUnique({
+  async findById(id: string, ctx?: TransactionContextInterface): Promise<Book | null> {
+    const prisma = ctx ? (ctx as PrismaClient) : this.prisma;
+    const foundBook = await prisma.book.findUnique({
       where: { id },
     });
 
@@ -56,8 +59,9 @@ export class PrismaBookRepository  implements BookRepositoryInterface {
     );
   }
 
-  async update(book: Book): Promise<Book> {
-    const updatedBook = await this.prisma.book.update({
+  async update(book: Book,  ctx?: TransactionContextInterface): Promise<Book> {
+    const prisma = ctx ? (ctx as PrismaClient) : this.prisma;
+    const updatedBook = await prisma.book.update({
       where: { id: book.id },
       data: {
         isAvailable: book.isAvailable,

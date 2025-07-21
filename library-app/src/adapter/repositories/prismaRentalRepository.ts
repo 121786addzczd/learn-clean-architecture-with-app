@@ -1,12 +1,14 @@
 import { PrismaClient } from '@prisma/client';
 import { Rental } from '../../domain/entities/rental';
 import { RentalRepositoryInterface } from '../../domain/repositories/rentalRepositoryInterface';
+import { TransactionContextInterface } from '../../domain/utils/transactionContextInterface';
 
 export class PrismaRentalRepository implements RentalRepositoryInterface {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create(rental: Rental): Promise<Rental> {
-    const createdRental = await this.prisma.rental.create({
+  async create(rental: Rental, ctx?: TransactionContextInterface): Promise<Rental> {
+    const prisma = ctx ? (ctx as PrismaClient) : this.prisma;
+    const createdRental = await prisma.rental.create({
       data: {
         bookId: rental.bookId,
         userId: rental.userId,
@@ -47,8 +49,9 @@ export class PrismaRentalRepository implements RentalRepositoryInterface {
     );
   }
 
-  async findByUserId(userId: string): Promise<Rental[]> {
-    const foundRentals = await this.prisma.rental.findMany({
+  async findByUserId(userId: string, ctx?: TransactionContextInterface): Promise<Rental[]> {
+    const prisma = ctx ? (ctx as PrismaClient) : this.prisma;
+    const foundRentals = await prisma.rental.findMany({
       where: { userId },
     });
 
