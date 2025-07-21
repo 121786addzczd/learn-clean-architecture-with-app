@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import { Book } from '../../../domain/entities/book';
-import { BookRepositoryInterface } from '../../../domain/repositories/bookRepositoryInterface';
+import { Book } from '../../domain/entities/book';
+import { BookRepositoryInterface } from '../../domain/repositories/bookRepositoryInterface';
 
 /**
  * Prisma を使って書籍データを管理するリポジトリクラス

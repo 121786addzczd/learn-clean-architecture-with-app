@@ -1,5 +1,3 @@
-import { get } from "http";
-
 export class Book {
   constructor(
     private _id: string,
