@@ -1,8 +1,9 @@
 import inquirer from 'inquirer';
 import path from 'path';
-import { lowerCaseFirst, writeFile } from './utils';
+import { capitalize, lowerCaseFirst, writeFile } from './utils';
 import { generateEntity, generateRepositoryInterface } from './templates/entityLayer';
 import { generateUseCase, generateUseCaseInterface, generateRequestDto, generateResponseDto } from './templates/useCaseLayer';
+import { generateController, generatePrismaRepository } from './templates/adapterLayer';
 
 async function generateEntityLayer() {
   const { entityName } = await inquirer.prompt([
@@ -91,6 +92,43 @@ async function generateUseCaseLayer() {
 
 }
 
+async function generateInterfaceAdapterLayer() {
+  const { entityName, useCaseName } = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'entityName',
+      message: 'エンティティの名前を入力してください:',
+    },
+    {
+      type: 'input',
+      name: 'useCaseName',
+      message: 'ユースケースの名前を入力してください:',
+    }
+  ]);
+
+  const basePath = path.join(__dirname, '..', 'src', 'adapter');
+
+  const controllerContent = generateController(entityName, useCaseName);
+  writeFile(
+    path.join(
+      basePath,
+      'controllers',
+      `${lowerCaseFirst(entityName)}Controller.ts`
+    ),
+    controllerContent
+  );
+
+  const repositoryContent = generatePrismaRepository(entityName);
+  writeFile(
+    path.join(
+      basePath,
+      'repositories',
+      `prisma${capitalize(entityName)}Repository.ts`
+    ),
+    repositoryContent
+  );
+}
+
 async function main() {
   const layers = [
     'Entity',
@@ -115,7 +153,7 @@ async function main() {
   } else if (layer === 'UseCase') {
     await generateUseCaseLayer();
   } else if (layer === 'Interface adapter') {
-    console.log('Interface adapter');
+    await generateInterfaceAdapterLayer();
   } else if (layer === 'Frameworks & driver') {
     console.log('Frameworks & driver');
   } else {
