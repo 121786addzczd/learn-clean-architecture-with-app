@@ -2,6 +2,7 @@ import inquirer from 'inquirer';
 import path from 'path';
 import { lowerCaseFirst, writeFile } from './utils';
 import { generateEntity, generateRepositoryInterface } from './templates/entityLayer';
+import { generateUseCase, generateUseCaseInterface, generateRequestDto, generateResponseDto } from './templates/useCaseLayer';
 
 async function generateEntityLayer() {
   const { entityName } = await inquirer.prompt([
@@ -20,12 +21,74 @@ async function generateEntityLayer() {
   const RepositoryInterfaceContent = generateRepositoryInterface(entityName);
   writeFile(
     path.join(
-      basePath, 
-      'repositories', 
+      basePath,
+      'repositories',
       `${lowerCaseFirst(entityName)}RepositoryInterface.ts`
     ),
     RepositoryInterfaceContent
   );
+}
+
+async function generateUseCaseLayer() {
+  const { entityName, useCaseName } = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'entityName',
+      message: 'エンティティの名前を入力してください:',
+    },
+    {
+      type: 'input',
+      name: 'useCaseName',
+      message: 'ユースケースの名前を入力してください:',
+    }
+  ]);
+
+  const basePath = path.join(__dirname, '..', 'src', 'application');
+
+  const useCaseInterfaceContent = generateUseCaseInterface(entityName, useCaseName);
+  writeFile(
+    path.join(
+      basePath,
+      'useCases',
+      `${entityName}`,
+      `${lowerCaseFirst(useCaseName)}UseCaseInterface.ts`
+    ),
+    useCaseInterfaceContent
+  );
+
+  const useCaseContent = generateUseCase(entityName, useCaseName);
+  writeFile(
+    path.join(
+      basePath,
+      'useCases',
+      `${entityName}`,
+      `${lowerCaseFirst(useCaseName)}UseCase.ts`
+    ),
+    useCaseContent
+  );
+
+  const requestDtoContent = generateRequestDto(useCaseName);
+  writeFile(
+    path.join(
+      basePath,
+      'dtos',
+      `${entityName}`,
+      `${lowerCaseFirst(useCaseName)}RequestDto.ts`
+    ),
+    requestDtoContent
+  );
+
+  const responseDtoContent = generateResponseDto(useCaseName);
+  writeFile(
+    path.join(
+      basePath,
+      'dtos',
+      `${entityName}`,
+      `${lowerCaseFirst(useCaseName)}ResponseDto.ts`
+    ),
+    responseDtoContent
+  );
+
 }
 
 async function main() {
@@ -50,7 +113,7 @@ async function main() {
   if (layer === 'Entity') {
     await generateEntityLayer();
   } else if (layer === 'UseCase') {
-    console.log('UseCase');
+    await generateUseCaseLayer();
   } else if (layer === 'Interface adapter') {
     console.log('Interface adapter');
   } else if (layer === 'Frameworks & driver') {

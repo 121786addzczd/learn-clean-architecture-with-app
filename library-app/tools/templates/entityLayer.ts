@@ -17,7 +17,7 @@ export class ${capitalize(name)} {
   return content.trim() + '\n';
 }
 
-export function generateRepositoryInterface(name: string): string{
+export function generateRepositoryInterface(name: string): string {
   const content = `
 import { ${capitalize(name)} } from '../entities/${lowerCaseFirst(name)}';
 
