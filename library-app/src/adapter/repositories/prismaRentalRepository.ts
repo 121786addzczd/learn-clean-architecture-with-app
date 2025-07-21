@@ -68,4 +68,23 @@ export class PrismaRentalRepository implements RentalRepositoryInterface {
         )
     );
   }
+
+  async update(rental: Rental, ctx?: TransactionContextInterface): Promise<Rental> {
+    const prisma = ctx ? (ctx as PrismaClient) : this.prisma;
+
+    const updateRental = await prisma.rental.update({
+      where: { id: rental.id },
+      data: { returnDate: rental.returnDate }
+    });
+
+    return new Rental(
+      updateRental.id,
+      updateRental.bookId,
+      updateRental.userId,
+      updateRental.rentalDate,
+      updateRental.returnDate,
+      updateRental.createdAt,
+      updateRental.updatedAt
+    );
+  }
 }

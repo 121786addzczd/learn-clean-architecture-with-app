@@ -5,4 +5,5 @@ export interface RentalRepositoryInterface {
   create(rental: Rental, ctx?:TransactionContextInterface): Promise<Rental>;
   findById(id: string, ctx?:TransactionContextInterface): Promise<Rental | null>;
   findByUserId(userId: string, ctx?:TransactionContextInterface): Promise<Rental[]>;
+  update(rental: Rental, ctx?: TransactionContextInterface): Promise<Rental>;
 }

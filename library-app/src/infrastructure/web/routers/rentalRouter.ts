@@ -6,6 +6,7 @@ import { PrismaRentalRepository } from '../../../adapter/repositories/prismaRent
 import { PrismaBookRepository } from '../../../adapter/repositories/prismaBookRepository';
 import { RentalBookUseCase } from '../../../application/useCases/rental/rentalBookUseCase';
 import { RentalController } from '../../../adapter/controllers/rentalController';
+import { ReturnBookUseCase } from '../../../application/useCases/rental/returnBookUseCase';
 
 const router = Router();
 
@@ -20,8 +21,14 @@ const rentalBookUseCase = new RentalBookUseCase(
   uuidGenerator,
   transactionManager
 );
-const rentalController = new RentalController(rentalBookUseCase);
+const returnBookUseCase = new ReturnBookUseCase(
+  rentalRepository,
+  bookRepository,
+  transactionManager
+);
+const rentalController = new RentalController(rentalBookUseCase, returnBookUseCase);
 // ルーティング定義
 router.post('/', rentalController.rentalBook.bind(rentalController));
+router.post('/return', rentalController.returnBook.bind(rentalController));
 
 export default router;
